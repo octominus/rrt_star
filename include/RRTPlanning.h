@@ -35,8 +35,8 @@ public:
     void Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
-    void PathMarker(oc::PathControl path);
-    void PlannerMarker(ob::PlannerData &data);
+    // void PathMarker(oc::PathControl path);
+    // void PlannerMarker(ob::PlannerData &planner_data);
     
 private:
     // Returns a structure representing the optimization objective to use

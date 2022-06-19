@@ -66,32 +66,49 @@ void RRTPlanning::Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &m
     // planning time
     ob::PlannerStatus solved = optimizingPlanner->solve(0.1);
     std::cout << "Status: " << solved << std::endl;
+    ob::PlannerData planner_data(si);
+    optimizingPlanner->getPlannerData(planner_data);
+    
+    uint32_t f_index_pd = planner_data.getStartIndex(0);
+    uint32_t n_pd = planner_data.numVertices();
+    std::cout << "Number of Planner Data: " << n_pd << std::endl;
+
+    std::queue<uint32_t> vertices;
+    vertices.push(f_index_pd);
+
+    while(!vertices.empty()) {
+        uint32_t p_index_vertex = vertices.front();
+        vertices.pop();
+        // for parent elements
+        const ob::PlannerDataVertex p_vertex = planner_data.getVertex(p_index_vertex);
+        const ob::RealVectorStateSpace::StateType *p_data2D = p_vertex.getState()->as<ob::RealVectorStateSpace::StateType>();
+        int x_start = p_data2D->values[0];
+        int y_start = p_data2D->values[1];
+
+        // std::cout << "Vertex x_start: " << x_start << std::endl;
+        // std::cout << "Vertex y_start: " << y_start << std::endl;
+
+        std::vector<uint32_t> p_edges;
+        uint32_t n_p_edge = planner_data.getEdges(p_index_vertex, p_edges), e_index;
+
+        for (e_index = 0; e_index < n_p_edge; ++e_index) {
+            // for child elements 
+            uint32_t c_index_vertex = p_edges[e_index];
+            const ob::PlannerDataVertex c_vertex = planner_data.getVertex(c_index_vertex);
+            const ob::RealVectorStateSpace::StateType *e_data2D = c_vertex.getState()->as<ob::RealVectorStateSpace::StateType>();
+            int x_end = e_data2D->values[0];
+            int y_end = e_data2D->values[1];
+            vertices.push(c_index_vertex);
+        }
+    }
 
     std::shared_ptr<oc::PathControl> solved_path = std::static_pointer_cast<oc::PathControl>(pdef->getSolutionPath());
     std::cout << solved_path->getStateCount() << std::endl;
-    PathMarker(*solved_path);
-
-    ob::PlannerData planner_data(si);
-    optimizingPlanner->getPlannerData(planner_data);
-    PlannerMarker(planner_data);
-
-}
-
-void RRTPlanning::DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
-    _resolation = map_data->info.resolution;
-    _height = map_data->info.height * _resolation;  // unit (m)
-    _width = map_data->info.width * _resolation;    // unit (m)
-
-    // std::cout << "Height: " << RRTPlanning::Map::_height << " m" << std::endl;
-    // std::cout << "Width: " << RRTPlanning::Map::_width << " m" << std::endl;
-    // std::cout << "Resolation: " << RRTPlanning::Map::_resolation << " m/px" << std::endl;
-}
-
-void RRTPlanning::PathMarker(oc::PathControl path) {
-    int path_state_count = path.getStateCount(), path_index;
+    
+    int path_state_count = solved_path->getStateCount(), path_index;
     for (path_index = 0; path_index < path_state_count; path_index++) {
         /* code */
-        const ob::State *path_state = path.getState(path_index);
+        const ob::State *path_state = solved_path->getState(path_index);
         const ob::RealVectorStateSpace::StateType *state2D = path_state->as<ob::RealVectorStateSpace::StateType>();
         double path_x = state2D->values[0];
         double path_y = state2D->values[1];
@@ -102,37 +119,12 @@ void RRTPlanning::PathMarker(oc::PathControl path) {
     }
 }
 
-void RRTPlanning::PlannerMarker(ob::PlannerData &data) {
-    uint32_t f_index_pd = data.getStartIndex(0);
-    uint32_t n_pd = data.numVertices();
-    std::cout << "Number of Planner Data: " << n_pd << std::endl;
+void RRTPlanning::DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
+    _resolation = map_data->info.resolution;
+    _height = map_data->info.height * _resolation;  // unit (m)
+    _width = map_data->info.width * _resolation;    // unit (m)
 
-    std::queue<uint32_t> vertices;
-    vertices.push(f_index_pd);
-
-    while(!vertices.empty()) {
-        uint32_t p_index_vertex = vertices.front();
-        vertices.pop();
-        // for parent elements
-        const ob::PlannerDataVertex p_vertex = data.getVertex(p_index_vertex);
-        const ob::RealVectorStateSpace::StateType *p_data2D = p_vertex.getState()->as<ob::RealVectorStateSpace::StateType>();
-        int x_start = p_data2D->values[0];
-        int y_start = p_data2D->values[1];
-
-        // std::cout << "Vertex x_start: " << x_start << std::endl;
-        // std::cout << "Vertex y_start: " << y_start << std::endl;
-
-        std::vector<uint32_t> p_edges;
-        uint32_t n_p_edge = data.getEdges(p_index_vertex, p_edges), e_index;
-
-        for (e_index = 0; e_index < n_p_edge; ++e_index) {
-            // for child elements 
-            uint32_t c_index_vertex = p_edges[e_index];
-            const ob::PlannerDataVertex c_vertex = data.getVertex(c_index_vertex);
-            const ob::RealVectorStateSpace::StateType *e_data2D = c_vertex.getState()->as<ob::RealVectorStateSpace::StateType>();
-            int x_end = e_data2D->values[0];
-            int y_end = e_data2D->values[0];
-            vertices.push(c_index_vertex);
-        }
-    }
+    // std::cout << "Height: " << RRTPlanning::Map::_height << " m" << std::endl;
+    // std::cout << "Width: " << RRTPlanning::Map::_width << " m" << std::endl;
+    // std::cout << "Resolation: " << RRTPlanning::Map::_resolation << " m/px" << std::endl;
 }

@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]) {
 
     ros::init(argc, argv, "rrt_star");
-    std::cout << "Fener Ağlamaaaaa!" << std::endl;
+    std::cout << "RRT_STAR NODE CREATED" << std::endl;
 
     ros::NodeHandle n("~"); // Node name "/rrt_star"
 
