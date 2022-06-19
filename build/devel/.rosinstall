@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/setup.sh

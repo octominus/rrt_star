@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: rrt_star
+Description: Description of rrt_star
+Version: 0.0.0
+Cflags: -I/usr/include/eigen3
+Libs: -L${prefix}/lib 
+Requires: roscpp geometry_msgs nav_msgs rospy std_msgs

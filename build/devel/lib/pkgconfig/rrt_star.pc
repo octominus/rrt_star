@@ -1,0 +1,8 @@
+prefix=/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel
+
+Name: rrt_star
+Description: Description of rrt_star
+Version: 0.0.0
+Cflags: -I/usr/include/eigen3
+Libs: -L${prefix}/lib 
+Requires: roscpp geometry_msgs nav_msgs rospy std_msgs
