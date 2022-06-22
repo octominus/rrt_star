@@ -2,8 +2,8 @@
 // Created by octominus on 18.06.2022.
 //
 
-#ifndef RRT_STAR_WS_RRTPLANNING_H
-#define RRT_STAR_WS_RRTPLANNING_H
+#ifndef WS_RRT_STAR_RRTPLANNING_H
+#define WS_RRT_STAR_RRTPLANNING_H
 
 // OMPL Files
 #include <ompl/config.h>
@@ -14,17 +14,23 @@
 #include <ompl/control/spaces/RealVectorControlSpace.h>
 #include <ompl/base/objectives/PathLengthOptimizationObjective.h>
 #include <ompl/geometric/planners/rrt/RRTstar.h>
+#include <ompl/base/DiscreteMotionValidator.h>
+#include <ompl/util/Exception.h>
 
 // ROS Files
 #include <ros/ros.h>
 #include <nav_msgs/OccupancyGrid.h>
+#include <nav_msgs/Path.h>
+#include <geometry_msgs/PoseStamped.h>
 
 // C++ Files
 #include <iostream>
 #include <vector>
+#include <queue>
 
 // My Files
 #include "ValidityChecker.h" // DONE
+#include "MotionValidator.h"
 
 namespace ob = ompl::base;
 namespace oc = ompl::control;
@@ -32,9 +38,15 @@ namespace og = ompl::geometric;
 
 class RRTPlanning {
 public:
+    explicit RRTPlanning(ros::NodeHandle &nh);
     void Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    ob::OptimizationObjectivePtr getClearanceObjective(const ob::SpaceInformationPtr& si);
+    ob::OptimizationObjectivePtr getBalancedObjective1(const ob::SpaceInformationPtr& si);
+    ob::OptimizationObjectivePtr getBalancedObjective2(const ob::SpaceInformationPtr& si);
+    ros::Publisher _pub_name;
+    ros::Subscriber _sub_name;
     // void PathMarker(oc::PathControl path);
     // void PlannerMarker(ob::PlannerData &planner_data);
     
@@ -53,18 +65,6 @@ private:
     double _width = 0.0;
     double _height = 0.0;
     double _resolation = 0.0;
-
 };
 
-class ROSNode {
-public:
-    explicit ROSNode(ros::NodeHandle &nodehandle);
-    RRTPlanning node_callback;
-        
-private:
-    ros::NodeHandle &_nodehandle;
-    //ros::Publisher _pub_name;
-    ros::Subscriber _sub_name;
-};
-
-#endif //RRT_STAR_WS_RRTPLANNING_H
+#endif //WS_RRT_STAR_RRTPLANNING_H

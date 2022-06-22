@@ -7,9 +7,9 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel:/home/octominus/Projects/Robotic/ws_rrt_star/devel:/opt/ros/melodic'
-export LD_LIBRARY_PATH='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/lib:/home/octominus/Projects/Robotic/ws_rrt_star/devel/lib:/opt/ros/melodic/lib'
-export PKG_CONFIG_PATH='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/lib/pkgconfig:/home/octominus/Projects/Robotic/ws_rrt_star/devel/lib/pkgconfig:/opt/ros/melodic/lib/pkgconfig'
+export CMAKE_PREFIX_PATH="/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/share/common-lisp:/home/octominus/Projects/Robotic/ws_rrt_star/devel/share/common-lisp'
-export ROS_PACKAGE_PATH='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star:/home/octominus/Projects/Robotic/ws_rrt_star/src:/opt/ros/melodic/share'
+export ROSLISP_PACKAGE_DIRECTORIES='/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/share/common-lisp'
+export ROS_PACKAGE_PATH="/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star:$ROS_PACKAGE_PATH"

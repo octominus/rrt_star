@@ -2,8 +2,8 @@
 // Created by octominus on 19.06.2022.
 //
 
-#ifndef SRC_VALIDITYCHECKER_H
-#define SRC_VALIDITYCHECKER_H
+#ifndef WS_STAR_WS_VALIDITYCHECKER_H
+#define WS_STAR_WS_VALIDITYCHECKER_H
 
 #include <ompl/base/StateValidityChecker.h>
 #include <ompl/base/spaces/RealVectorStateSpace.h>
@@ -35,4 +35,4 @@ private:
     nav_msgs::OccupancyGrid::_data_type _map_data;
 };
 
-#endif //SRC_VALIDITYCHECKER_H
+#endif //WS_RRT_STAR_VALIDITYCHECKER_H

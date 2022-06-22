@@ -44,6 +44,7 @@ set(
         src/main.cpp
         src/RRTPlanning.cpp
         src/ValidityChecker.cpp
+        src/MotionValidator.cpp
 )
 
 add_executable(${PROJECT_NAME} ${sources})

@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
     ros::NodeHandle n("~"); // Node name "/rrt_star"
 
-    ROSNode nodes(n);
+    RRTPlanning planner(n);
 
     ros::spin();
     ros::waitForShutdown();

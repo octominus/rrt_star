@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+../include/ClearanceObjective.h
+ompl/base/objectives/StateCostIntegralObjective.h
+-
+
+../include/MotionValidator.h
+ompl/base/MotionValidator.h
+-
+ompl/base/spaces/RealVectorStateSpace.h
+-
+
 ../include/RRTPlanning.h
 ompl/config.h
 -
@@ -23,16 +33,28 @@ ompl/base/objectives/PathLengthOptimizationObjective.h
 -
 ompl/geometric/planners/rrt/RRTstar.h
 -
+ompl/base/DiscreteMotionValidator.h
+-
+ompl/util/Exception.h
+-
 ros/ros.h
 -
 nav_msgs/OccupancyGrid.h
+-
+nav_msgs/Path.h
+-
+geometry_msgs/PoseStamped.h
 -
 iostream
 -
 vector
 -
+queue
+-
 ValidityChecker.h
 ../include/ValidityChecker.h
+ClearanceObjective.h
+../include/ClearanceObjective.h
 
 ../include/ValidityChecker.h
 ompl/base/StateValidityChecker.h
@@ -41,6 +63,14 @@ ompl/base/spaces/RealVectorStateSpace.h
 -
 nav_msgs/OccupancyGrid.h
 -
+
+/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/ClearanceObjective.cpp
+ClearanceObjective.h
+/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/ClearanceObjective.h
+
+/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/MotionValidator.cpp
+MotionValidator.h
+/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/MotionValidator.h
 
 /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/RRTPlanning.cpp
 RRTPlanning.h
@@ -90,6 +120,26 @@ ros/message_operations.h
 geometry_msgs/Point.h
 -
 geometry_msgs/Quaternion.h
+-
+
+/opt/ros/melodic/include/geometry_msgs/PoseStamped.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+geometry_msgs/Pose.h
 -
 
 /opt/ros/melodic/include/geometry_msgs/Quaternion.h
@@ -146,9 +196,35 @@ std_msgs/Header.h
 nav_msgs/MapMetaData.h
 -
 
+/opt/ros/melodic/include/nav_msgs/Path.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+geometry_msgs/PoseStamped.h
+-
+
 /opt/ros/melodic/include/ompl-1.4/ompl/base/Cost.h
 iostream
 -
+
+/opt/ros/melodic/include/ompl-1.4/ompl/base/DiscreteMotionValidator.h
+ompl/base/MotionValidator.h
+/opt/ros/melodic/include/ompl-1.4/ompl/base/ompl/base/MotionValidator.h
+ompl/base/SpaceInformation.h
+/opt/ros/melodic/include/ompl-1.4/ompl/base/ompl/base/SpaceInformation.h
 
 /opt/ros/melodic/include/ompl-1.4/ompl/base/GenericParam.h
 ompl/util/Console.h
@@ -465,6 +541,10 @@ ompl/base/ScopedState.h
 /opt/ros/melodic/include/ompl-1.4/ompl/base/goals/ompl/base/ScopedState.h
 
 /opt/ros/melodic/include/ompl-1.4/ompl/base/objectives/PathLengthOptimizationObjective.h
+ompl/base/OptimizationObjective.h
+/opt/ros/melodic/include/ompl-1.4/ompl/base/objectives/ompl/base/OptimizationObjective.h
+
+/opt/ros/melodic/include/ompl-1.4/ompl/base/objectives/StateCostIntegralObjective.h
 ompl/base/OptimizationObjective.h
 /opt/ros/melodic/include/ompl-1.4/ompl/base/objectives/ompl/base/OptimizationObjective.h
 

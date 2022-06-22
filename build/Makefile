@@ -752,6 +752,33 @@ gtest/fast:
 	$(MAKE) -f gtest/googlemock/gtest/CMakeFiles/gtest.dir/build.make gtest/googlemock/gtest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
+src/MotionValidator.o: src/MotionValidator.cpp.o
+
+.PHONY : src/MotionValidator.o
+
+# target to build an object file
+src/MotionValidator.cpp.o:
+	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.o
+.PHONY : src/MotionValidator.cpp.o
+
+src/MotionValidator.i: src/MotionValidator.cpp.i
+
+.PHONY : src/MotionValidator.i
+
+# target to preprocess a source file
+src/MotionValidator.cpp.i:
+	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.i
+.PHONY : src/MotionValidator.cpp.i
+
+src/MotionValidator.s: src/MotionValidator.cpp.s
+
+.PHONY : src/MotionValidator.s
+
+# target to generate assembly for a file
+src/MotionValidator.cpp.s:
+	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.s
+.PHONY : src/MotionValidator.cpp.s
+
 src/RRTPlanning.o: src/RRTPlanning.cpp.o
 
 .PHONY : src/RRTPlanning.o
@@ -891,6 +918,9 @@ help:
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
+	@echo "... src/MotionValidator.o"
+	@echo "... src/MotionValidator.i"
+	@echo "... src/MotionValidator.s"
 	@echo "... src/RRTPlanning.o"
 	@echo "... src/RRTPlanning.i"
 	@echo "... src/RRTPlanning.s"
