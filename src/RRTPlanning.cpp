@@ -132,6 +132,8 @@ void RRTPlanning::Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &m
         pub_path.publish(path)
 */
 
+    std::vector<float> x_points, y_points; 
+
     for (path_index = 0; path_index < path_state_count; path_index++) {
         /* code */
         const ob::State *path_state = solved_path->getState(path_index);
@@ -147,11 +149,14 @@ void RRTPlanning::Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &m
         path_point.header.seq = path_index + 1;
         path_point.header.stamp = path_points.header.stamp;
         path_points.poses.push_back(path_point);
+        x_points.push_back(path_x);
+        y_points.push_back(path_y);
         std::cout 
         << "x: " << path_x
         << " y: " << path_y
         << std::endl;
     }
+    CubicSpline2D deneme(x_points, y_points);
     _pub_name.publish(path_points);
 }
 
@@ -165,17 +170,30 @@ void RRTPlanning::DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
     // std::cout << "Resolation: " << RRTPlanning::Map::_resolation << " m/px" << std::endl;
 }
 
-ob::OptimizationObjectivePtr RRTPlanning::getClearanceObjective(const ob::SpaceInformationPtr& si) {
+ob::OptimizationObjectivePtr getPathLengthObjective(const ob::SpaceInformationPtr& si)
+{
+    return ob::OptimizationObjectivePtr(new ob::PathLengthOptimizationObjective(si));
+}
+
+ob::OptimizationObjectivePtr getThresholdPathLengthObj(const ob::SpaceInformationPtr& si)
+{
+    ob::OptimizationObjectivePtr obj(new ob::PathLengthOptimizationObjective(si));
+    obj->setCostThreshold(ob::Cost(1.51));
+    return obj;
+}
+
+ob::OptimizationObjectivePtr RRTPlanning::getClearanceObjective(const ob::SpaceInformationPtr& si)
+{
     return ob::OptimizationObjectivePtr(new ClearanceObjective(si));
 }
 
-ob::OptimizationObjectivePtr RRTPlanning::getBalancedObjective1(const ob::SpaceInformationPtr& si) {
+ob::OptimizationObjectivePtr RRTPlanning::getBalancedObjective1(const ob::SpaceInformationPtr& si)
+{
     ob::OptimizationObjectivePtr lengthObj(new ob::PathLengthOptimizationObjective(si));
     ob::OptimizationObjectivePtr clearObj(new ClearanceObjective(si));
-
     ob::MultiOptimizationObjective* opt = new ob::MultiOptimizationObjective(si);
     opt->addObjective(lengthObj, 10.0);
-    opt->addObjective(clearObj, 1.0);
+    opt->addObjective(clearObj, 2.0);
 
     return ob::OptimizationObjectivePtr(opt);
 }
@@ -188,55 +206,9 @@ ob::OptimizationObjectivePtr RRTPlanning::getBalancedObjective2(const ob::SpaceI
     return 10.0*lengthObj + clearObj;
 }
 
-
-
- void ompl::base::DiscreteMotionValidator::defaultSettings()
- {
-     stateSpace_ = si_->getStateSpace().get();
-     if (stateSpace_ == nullptr)
-         throw Exception("No state space for motion validator");
- }
-  
- bool ompl::base::DiscreteMotionValidator::checkMotion(const State *s1, const State *s2, std::pair<State *, double> &lastValid) const
- {
-     /* assume motion starts in a valid configuration so s1 is valid */
-  
-     bool result = true;
-     int nd = stateSpace_->validSegmentCount(s1, s2);
-  
-     if (nd > 1)
-     {
-         /* temporary storage for the checked state */
-         State *test = si_->allocState();
-  
-         for (int j = 1; j < nd; ++j)
-         {
-             stateSpace_->interpolate(s1, s2, (double)j / (double)nd, test);
-             if (!si_->isValid(test))
-             {
-                 lastValid.second = (double)(j - 1) / (double)nd;
-                 if (lastValid.first != nullptr)
-                     stateSpace_->interpolate(s1, s2, lastValid.second, lastValid.first);
-                 result = false;
-                 break;
-             }
-         }
-         si_->freeState(test);
-     }
-  
-     if (result)
-         if (!si_->isValid(s2))
-         {
-             lastValid.second = (double)(nd - 1) / (double)nd;
-             if (lastValid.first != nullptr)
-                 stateSpace_->interpolate(s1, s2, lastValid.second, lastValid.first);
-             result = false;
-         }
-  
-     if (result)
-         valid_++;
-     else
-         invalid_++;
-  
-     return result;
- }
+ob::OptimizationObjectivePtr RRTPlanning::getPathLengthObjWithCostToGo(const ob::SpaceInformationPtr& si)
+{
+    ob::OptimizationObjectivePtr obj(new ob::PathLengthOptimizationObjective(si));
+    obj->setCostToGoHeuristic(&ob::goalRegionCostToGo);
+    return obj;
+}

@@ -9,10 +9,14 @@
 #include <ompl/config.h>
 #include <ompl/control/SimpleSetup.h>
 #include <ompl/base/goals/GoalState.h>
+#include <ompl/base/SpaceInformation.h>
 #include <ompl/base/spaces/SE2StateSpace.h>
 #include <ompl/base/spaces/DiscreteStateSpace.h>
+#include <ompl/base/spaces/RealVectorStateSpace.h>
 #include <ompl/control/spaces/RealVectorControlSpace.h>
+#include <ompl/base/objectives/StateCostIntegralObjective.h>
 #include <ompl/base/objectives/PathLengthOptimizationObjective.h>
+#include <ompl/base/objectives/MaximizeMinClearanceObjective.h>
 #include <ompl/geometric/planners/rrt/RRTstar.h>
 #include <ompl/base/DiscreteMotionValidator.h>
 #include <ompl/util/Exception.h>
@@ -31,6 +35,7 @@
 // My Files
 #include "ValidityChecker.h" // DONE
 #include "MotionValidator.h"
+#include "CubicSpliner.h"
 
 namespace ob = ompl::base;
 namespace oc = ompl::control;
@@ -39,12 +44,13 @@ namespace og = ompl::geometric;
 class RRTPlanning {
 public:
     explicit RRTPlanning(ros::NodeHandle &nh);
-    void Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
-    void Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
-    void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     ob::OptimizationObjectivePtr getClearanceObjective(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getBalancedObjective1(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getBalancedObjective2(const ob::SpaceInformationPtr& si);
+    ob::OptimizationObjectivePtr getPathLengthObjWithCostToGo(const ob::SpaceInformationPtr& si);
+    void Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    void Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     ros::Publisher _pub_name;
     ros::Subscriber _sub_name;
     // void PathMarker(oc::PathControl path);
@@ -65,6 +71,20 @@ private:
     double _width = 0.0;
     double _height = 0.0;
     double _resolation = 0.0;
+};
+
+class ClearanceObjective : public ob::StateCostIntegralObjective
+{
+public:
+    ClearanceObjective(const ob::SpaceInformationPtr& si) :
+        ob::StateCostIntegralObjective(si, true)
+    {
+    }
+
+    ob::Cost stateCost(const ob::State* s) const
+    {
+        return ob::Cost(1 / si_->getStateValidityChecker()->clearance(s));
+    }
 };
 
 #endif //WS_RRT_STAR_RRTPLANNING_H

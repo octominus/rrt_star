@@ -4,5 +4,5 @@ Name: rrt_star
 Description: Description of rrt_star
 Version: 0.0.0
 Cflags: -I/usr/include/eigen3
-Libs: -L${prefix}/lib 
+Libs: -L${prefix}/lib /usr/lib/x86_64-linux-gnu/liblapack.so /usr/lib/x86_64-linux-gnu/libblas.so
 Requires: roscpp geometry_msgs nav_msgs rospy std_msgs

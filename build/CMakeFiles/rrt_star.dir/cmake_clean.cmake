@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/rrt_star.dir/src/RRTPlanning.cpp.o"
   "CMakeFiles/rrt_star.dir/src/ValidityChecker.cpp.o"
   "CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.o"
+  "CMakeFiles/rrt_star.dir/src/CubicSpliner.cpp.o"
+  "CMakeFiles/rrt_star.dir/src/CubicSpline2D.cpp.o"
   "devel/lib/rrt_star/rrt_star.pdb"
   "devel/lib/rrt_star/rrt_star"
 )

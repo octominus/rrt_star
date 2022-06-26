@@ -18,6 +18,7 @@ find_package(
 
 find_package(Eigen3 REQUIRED)
 find_package(ompl REQUIRED)
+find_package(LAPACK REQUIRED)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -26,6 +27,7 @@ include_directories(
         ${catkin_INCLUDE_DIRS}
         ${OMPL_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
+        ${LAPACK_INCLUDE_DIRS}
 )
 
 catkin_package(
@@ -37,6 +39,7 @@ catkin_package(
         std_msgs
         DEPENDS
         EIGEN3
+        LAPACK
 )
 
 set(
@@ -45,6 +48,8 @@ set(
         src/RRTPlanning.cpp
         src/ValidityChecker.cpp
         src/MotionValidator.cpp
+        src/CubicSpliner.cpp
+        src/CubicSpline2D.cpp
 )
 
 add_executable(${PROJECT_NAME} ${sources})
@@ -53,4 +58,5 @@ target_link_libraries(
         ${PROJECT_NAME}
         ${catkin_LIBRARIES}
         ${OMPL_LIBRARIES}
+        ${LAPACK_LIBRARIES}
 )
