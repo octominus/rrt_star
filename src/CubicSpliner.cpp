@@ -1,8 +1,6 @@
 //
 // Created by octominus on 26.06.2022.
-// The codes were created as a C++ version using AtsushiSakai's Python library. 
-// For the original library: https://github.com/AtsushiSakai/PythonRobotics/blob/71de5d038f348d347d7b5dc00c914d523cd59f92/PathPlanning/CubicSpline/cubic_spline_planner.py
-//
+// 
 
 #include "CubicSpliner.h"
 

@@ -53,11 +53,18 @@ class CubicSpline2D
 {
 public:
     explicit CubicSpline2D(std::vector<float> x, std::vector<float> y);
+    std::vector<float> toVector(f_array arr);
+    std::vector<float> CalculatePosition(float s);
+    float CalculateCurvature(float s);
+    float CalculateYaw(float s);
+    f_array _s;
+    ~CubicSpline2D();
 private:
     f_array _calc_s(f_array x, f_array y);
     std::vector<float> _x;
     std::vector<float> _y;
-    f_array _s;
+    CubicSpliner *_sx;
+    CubicSpliner *_sy;
     f_array _ds;
 };
 

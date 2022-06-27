@@ -32,6 +32,8 @@
 #include <vector>
 #include <queue>
 
+#include <xtensor/xio.hpp>
+
 // My Files
 #include "ValidityChecker.h" // DONE
 #include "MotionValidator.h"
@@ -51,8 +53,10 @@ public:
     void Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    std::vector<std::vector<float>> CalculateSpline(std::vector<float> x, std::vector<float> y, float dt);
     ros::Publisher _pub_name;
     ros::Subscriber _sub_name;
+    ros::Publisher _cubic_path;
     // void PathMarker(oc::PathControl path);
     // void PlannerMarker(ob::PlannerData &planner_data);
     
@@ -71,6 +75,7 @@ private:
     double _width = 0.0;
     double _height = 0.0;
     double _resolation = 0.0;
+    float _T_s = 0.1;
 };
 
 class ClearanceObjective : public ob::StateCostIntegralObjective

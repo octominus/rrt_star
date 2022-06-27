@@ -30,10 +30,21 @@ include_directories(
         ${LAPACK_INCLUDE_DIRS}
 )
 
+add_service_files(
+  FILES
+  rrt_star.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 catkin_package(
         CATKIN_DEPENDS
         roscpp
         geometry_msgs
+        message_runtime
         nav_msgs
         rospy
         std_msgs
@@ -52,7 +63,7 @@ set(
         src/CubicSpline2D.cpp
 )
 
-add_executable(${PROJECT_NAME} ${sources})
+add_executable(rrt_star ${sources})
 
 target_link_libraries(
         ${PROJECT_NAME}
@@ -60,3 +71,9 @@ target_link_libraries(
         ${OMPL_LIBRARIES}
         ${LAPACK_LIBRARIES}
 )
+
+add_executable(rrt_star_server src/RRTStarServer.cpp)
+target_link_libraries(rrt_star_server ${catkin_LIBRARIES})
+
+add_executable(rrt_star_client src/RRTStarClient.cpp)
+target_link_libraries(rrt_star_client ${catkin_LIBRARIES})

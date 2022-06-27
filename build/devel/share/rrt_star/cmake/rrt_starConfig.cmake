@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(rrt_star_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/usr/include/eigen3 " STREQUAL " ")
+if(NOT "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include;/usr/include/eigen3 " STREQUAL " ")
   set(rrt_star_INCLUDE_DIRS "")
-  set(_include_dirs "/usr/include/eigen3")
+  set(_include_dirs "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include;/usr/include/eigen3")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(rrt_star_EXPORTED_TARGETS "")
+set(rrt_star_EXPORTED_TARGETS "rrt_star_generate_messages_cpp;rrt_star_generate_messages_eus;rrt_star_generate_messages_lisp;rrt_star_generate_messages_nodejs;rrt_star_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${rrt_star_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -185,7 +185,7 @@ foreach(t ${rrt_star_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;geometry_msgs;nav_msgs;rospy;std_msgs")
+set(depends "roscpp;geometry_msgs;message_runtime;nav_msgs;rospy;std_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   list(APPEND rrt_star_EXPORTED_TARGETS ${${rrt_star_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "rrt_star-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${rrt_star_DIR}/${extra})

@@ -9,6 +9,7 @@ RRTPlanning::RRTPlanning(ros::NodeHandle &nh) {
     std::cout << "ROSNode status: OK!" << std::endl;
     _sub_name = nh.subscribe("/map", 1, &RRTPlanning::Callback, this);
     _pub_name = nh.advertise<nav_msgs::Path>("path", 1);
+    _cubic_path = nh.advertise<nav_msgs::Path>("cubic_path", 1000);
     //_sub_name = nodehandle.subscribe("_sub_topic_name", 1, &map::CallBack);
 }
 
@@ -19,7 +20,7 @@ void RRTPlanning::Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
     _start_point.at(1) = 100 * _resolation;
     _goal_point.at(0) = 900 * _resolation;
     _goal_point.at(1) = 900 * _resolation;
-    int test = 10;
+    int test = 5;
     int t_index;
     for (t_index = 0; t_index < test; t_index++) {
         RRTPlanning::Planner(t_index, map_data);
@@ -156,8 +157,32 @@ void RRTPlanning::Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &m
         << " y: " << path_y
         << std::endl;
     }
-    CubicSpline2D deneme(x_points, y_points);
+    //CubicSpline2D deneme(x_points, y_points);
+    std::vector<std::vector<float>> result;
+    result = CalculateSpline(x_points, y_points, _T_s);
+
+    nav_msgs::Path cubic_path_points;
+    cubic_path_points.header.frame_id = "map";
+    cubic_path_points.header.seq = 0;
+    cubic_path_points.header.stamp = ros::Time::now();
+
+    for (path_index = 0; path_index < result[4].size(); path_index++) {
+        /* code */
+        std::vector<float> path_x = result[0];
+        std::vector<float> path_y = result[1];
+        geometry_msgs::PoseStamped cubic_path_point;
+        cubic_path_point.header.frame_id = "map";
+        cubic_path_point.pose.position.x = path_x[path_index];
+        cubic_path_point.pose.position.y = path_y[path_index];
+        cubic_path_point.pose.position.z = 1.0;
+        cubic_path_point.pose.orientation.w = 1.0;
+        cubic_path_point.header.seq = path_index + 1;
+        cubic_path_point.header.stamp = path_points.header.stamp;
+        cubic_path_points.poses.push_back(cubic_path_point);
+    }
+
     _pub_name.publish(path_points);
+    _cubic_path.publish(cubic_path_points);
 }
 
 void RRTPlanning::DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
@@ -168,6 +193,25 @@ void RRTPlanning::DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
     // std::cout << "Height: " << RRTPlanning::Map::_height << " m" << std::endl;
     // std::cout << "Width: " << RRTPlanning::Map::_width << " m" << std::endl;
     // std::cout << "Resolation: " << RRTPlanning::Map::_resolation << " m/px" << std::endl;
+}
+
+std::vector<std::vector<float>> RRTPlanning::CalculateSpline(std::vector<float> x, std::vector<float> y, float dt) {
+    std::vector<std::vector<float>> result;
+    std::vector<float> rx, ry, ryaw, rk, rs;
+    std::vector<float> ixy;
+    uint32_t index;
+    CubicSpline2D sp(x, y);
+    auto s = xt::arange<float>(0.0, sp._s.back(), dt);
+    for (index = 0; index < s.size(); index++) {
+        ixy = sp.CalculatePosition(s(index));
+        rx.push_back(ixy[0]);
+        ry.push_back(ixy[1]);
+        ryaw.push_back(sp.CalculateYaw(s(index)));
+        rk.push_back(sp.CalculateCurvature(s(index)));
+        rs.push_back(s(index));
+    }
+    result = {rx, ry, ryaw, rk, rs};
+    return result;
 }
 
 ob::OptimizationObjectivePtr getPathLengthObjective(const ob::SpaceInformationPtr& si)
@@ -192,8 +236,8 @@ ob::OptimizationObjectivePtr RRTPlanning::getBalancedObjective1(const ob::SpaceI
     ob::OptimizationObjectivePtr lengthObj(new ob::PathLengthOptimizationObjective(si));
     ob::OptimizationObjectivePtr clearObj(new ClearanceObjective(si));
     ob::MultiOptimizationObjective* opt = new ob::MultiOptimizationObjective(si);
-    opt->addObjective(lengthObj, 10.0);
-    opt->addObjective(clearObj, 2.0);
+    opt->addObjective(lengthObj, 20.0);
+    opt->addObjective(clearObj, 0.2);
 
     return ob::OptimizationObjectivePtr(opt);
 }

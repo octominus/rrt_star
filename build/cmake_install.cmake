@@ -129,7 +129,43 @@ file(INSTALL DESTINATION "/usr/local" TYPE FILE FILES "/home/octominus/Projects/
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rrt_star/srv" TYPE FILE FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/srv/rrt_star.srv")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rrt_star/cmake" TYPE FILE FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/catkin_generated/installspace/rrt_star-msg-paths.cmake")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include/rrt_star")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/share/roseus/ros/rrt_star")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/share/common-lisp/ros/rrt_star")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/share/gennodejs/ros/rrt_star")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  execute_process(COMMAND "/usr/bin/python2" -m compileall "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/lib/python2.7/dist-packages/rrt_star")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/lib/python2.7/dist-packages/rrt_star")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/catkin_generated/installspace/rrt_star.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rrt_star/cmake" TYPE FILE FILES "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/catkin_generated/installspace/rrt_star-msg-extras.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
