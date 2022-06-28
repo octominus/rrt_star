@@ -4,13 +4,8 @@
 
 #include "RRTPlanning.h"
 
-RRTPlanning::RRTPlanning(ros::NodeHandle &nh) {
-    //_pub_name = nodehandle.advertise<int>("/_pub_topic_name", 1);
+RRTPlanning::RRTPlanning() {
     std::cout << "\tROS Node status: \033[1;37mOK!\033[0m\n" << std::endl;
-    // _sub_name = nh.subscribe("/map", 1, &RRTPlanning::MapCallback, this);
-    // _pub_name = nh.advertise<nav_msgs::Path>("path", 1);
-    // _cubic_path = nh.advertise<nav_msgs::Path>("cubic_path", 1000);
-    //_sub_name = nodehandle.subscribe("_sub_topic_name", 1, &map::CallBack);
 }
 
 void RRTPlanning::FindPath(const nav_msgs::OccupancyGrid::ConstPtr &map_data, std::vector<float> start, std::vector<float> goal) {

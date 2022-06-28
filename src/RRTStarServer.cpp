@@ -15,9 +15,8 @@ nav_msgs::Path curved_path;
 bool RRTStarCalculator(rrt_star::rrt_star::Request  &req, rrt_star::rrt_star::Response &res) {
     std::vector<float> start = {req.X1, req.Y1};
     std::vector<float> goal = {req.X2, req.Y2};
-    ros::NodeHandle rrt;
     ROS_INFO("\nDesired Points:\n\t\033[1;31mStart:\033[m (%.2f, %.2f)\n\t\033[1;32mGoal:\033[m (%.2f, %.2f)", (float)req.X1, (float)req.Y1, (float)req.X2, (float)req.Y2);
-    RRTPlanning planner(rrt);
+    RRTPlanning planner;
     planner.FindPath(map, start, goal);
     exact_path = planner.GetExactPath();
     curved_path = planner.GetCurvedPath();

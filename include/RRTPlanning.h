@@ -32,14 +32,12 @@
 #include <vector>
 #include <queue>
 
-#include <boost/shared_ptr.hpp>
-
+// Xtensor Files
 #include <xtensor/xio.hpp>
 
 // My Files
-#include "ValidityChecker.h" // DONE
-#include "MotionValidator.h"
-#include "CubicSpliner.h"
+#include "ValidityChecker.h" 	// DONE
+#include "CubicSpliner.h" 	// DONE
 
 namespace ob = ompl::base;
 namespace oc = ompl::control;
@@ -47,7 +45,7 @@ namespace og = ompl::geometric;
 
 class RRTPlanning {
 public:
-    explicit RRTPlanning(ros::NodeHandle &nh);
+    explicit RRTPlanning();
     ob::OptimizationObjectivePtr getClearanceObjective(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getBalancedObjective1(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getBalancedObjective2(const ob::SpaceInformationPtr& si);
