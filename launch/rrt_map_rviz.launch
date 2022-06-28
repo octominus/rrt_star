@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="map_server" type="map_server" name="map_server_node" args="$(find rrt_star)/maps/map1.yaml"  output="screen"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find rrt_star)/rviz/rrt.rviz" />
+</launch>

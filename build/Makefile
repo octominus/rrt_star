@@ -941,6 +941,7 @@ src/CubicSpline2D.o: src/CubicSpline2D.cpp.o
 # target to build an object file
 src/CubicSpline2D.cpp.o:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/CubicSpline2D.cpp.o
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/CubicSpline2D.cpp.o
 .PHONY : src/CubicSpline2D.cpp.o
 
 src/CubicSpline2D.i: src/CubicSpline2D.cpp.i
@@ -950,6 +951,7 @@ src/CubicSpline2D.i: src/CubicSpline2D.cpp.i
 # target to preprocess a source file
 src/CubicSpline2D.cpp.i:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/CubicSpline2D.cpp.i
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/CubicSpline2D.cpp.i
 .PHONY : src/CubicSpline2D.cpp.i
 
 src/CubicSpline2D.s: src/CubicSpline2D.cpp.s
@@ -959,6 +961,7 @@ src/CubicSpline2D.s: src/CubicSpline2D.cpp.s
 # target to generate assembly for a file
 src/CubicSpline2D.cpp.s:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/CubicSpline2D.cpp.s
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/CubicSpline2D.cpp.s
 .PHONY : src/CubicSpline2D.cpp.s
 
 src/CubicSpliner.o: src/CubicSpliner.cpp.o
@@ -968,6 +971,7 @@ src/CubicSpliner.o: src/CubicSpliner.cpp.o
 # target to build an object file
 src/CubicSpliner.cpp.o:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/CubicSpliner.cpp.o
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/CubicSpliner.cpp.o
 .PHONY : src/CubicSpliner.cpp.o
 
 src/CubicSpliner.i: src/CubicSpliner.cpp.i
@@ -977,6 +981,7 @@ src/CubicSpliner.i: src/CubicSpliner.cpp.i
 # target to preprocess a source file
 src/CubicSpliner.cpp.i:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/CubicSpliner.cpp.i
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/CubicSpliner.cpp.i
 .PHONY : src/CubicSpliner.cpp.i
 
 src/CubicSpliner.s: src/CubicSpliner.cpp.s
@@ -986,6 +991,7 @@ src/CubicSpliner.s: src/CubicSpliner.cpp.s
 # target to generate assembly for a file
 src/CubicSpliner.cpp.s:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/CubicSpliner.cpp.s
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/CubicSpliner.cpp.s
 .PHONY : src/CubicSpliner.cpp.s
 
 src/MotionValidator.o: src/MotionValidator.cpp.o
@@ -995,6 +1001,7 @@ src/MotionValidator.o: src/MotionValidator.cpp.o
 # target to build an object file
 src/MotionValidator.cpp.o:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.o
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/MotionValidator.cpp.o
 .PHONY : src/MotionValidator.cpp.o
 
 src/MotionValidator.i: src/MotionValidator.cpp.i
@@ -1004,6 +1011,7 @@ src/MotionValidator.i: src/MotionValidator.cpp.i
 # target to preprocess a source file
 src/MotionValidator.cpp.i:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.i
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/MotionValidator.cpp.i
 .PHONY : src/MotionValidator.cpp.i
 
 src/MotionValidator.s: src/MotionValidator.cpp.s
@@ -1013,6 +1021,7 @@ src/MotionValidator.s: src/MotionValidator.cpp.s
 # target to generate assembly for a file
 src/MotionValidator.cpp.s:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/MotionValidator.cpp.s
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/MotionValidator.cpp.s
 .PHONY : src/MotionValidator.cpp.s
 
 src/RRTPlanning.o: src/RRTPlanning.cpp.o
@@ -1022,6 +1031,7 @@ src/RRTPlanning.o: src/RRTPlanning.cpp.o
 # target to build an object file
 src/RRTPlanning.cpp.o:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/RRTPlanning.cpp.o
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/RRTPlanning.cpp.o
 .PHONY : src/RRTPlanning.cpp.o
 
 src/RRTPlanning.i: src/RRTPlanning.cpp.i
@@ -1031,6 +1041,7 @@ src/RRTPlanning.i: src/RRTPlanning.cpp.i
 # target to preprocess a source file
 src/RRTPlanning.cpp.i:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/RRTPlanning.cpp.i
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/RRTPlanning.cpp.i
 .PHONY : src/RRTPlanning.cpp.i
 
 src/RRTPlanning.s: src/RRTPlanning.cpp.s
@@ -1040,6 +1051,7 @@ src/RRTPlanning.s: src/RRTPlanning.cpp.s
 # target to generate assembly for a file
 src/RRTPlanning.cpp.s:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/RRTPlanning.cpp.s
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/RRTPlanning.cpp.s
 .PHONY : src/RRTPlanning.cpp.s
 
 src/RRTStarClient.o: src/RRTStarClient.cpp.o
@@ -1103,6 +1115,7 @@ src/ValidityChecker.o: src/ValidityChecker.cpp.o
 # target to build an object file
 src/ValidityChecker.cpp.o:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/ValidityChecker.cpp.o
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/ValidityChecker.cpp.o
 .PHONY : src/ValidityChecker.cpp.o
 
 src/ValidityChecker.i: src/ValidityChecker.cpp.i
@@ -1112,6 +1125,7 @@ src/ValidityChecker.i: src/ValidityChecker.cpp.i
 # target to preprocess a source file
 src/ValidityChecker.cpp.i:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/ValidityChecker.cpp.i
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/ValidityChecker.cpp.i
 .PHONY : src/ValidityChecker.cpp.i
 
 src/ValidityChecker.s: src/ValidityChecker.cpp.s
@@ -1121,6 +1135,7 @@ src/ValidityChecker.s: src/ValidityChecker.cpp.s
 # target to generate assembly for a file
 src/ValidityChecker.cpp.s:
 	$(MAKE) -f CMakeFiles/rrt_star.dir/build.make CMakeFiles/rrt_star.dir/src/ValidityChecker.cpp.s
+	$(MAKE) -f CMakeFiles/rrt_star_server.dir/build.make CMakeFiles/rrt_star_server.dir/src/ValidityChecker.cpp.s
 .PHONY : src/ValidityChecker.cpp.s
 
 src/main.o: src/main.cpp.o

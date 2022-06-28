@@ -22,7 +22,7 @@
     }
 */
 
-ValidityChecker::ValidityChecker(const ob::SpaceInformationPtr &si, const nav_msgs::OccupancyGrid::ConstPtr &map_data) : 
+ValidityChecker::ValidityChecker(const ob::SpaceInformationPtr &si, const nav_msgs::OccupancyGrid_<std::allocator<void>>::ConstPtr &map_data) : 
     ob::StateValidityChecker(si), _map_width(map_data->info.width), _map_height(map_data->info.height), _map_resolation(map_data->info.resolution), _map_data(map_data->data) {
        // std::cout << "Validity Function Status: Loaded!" << std::endl;
        // std::cout << "About Map\n" << "----------\n"

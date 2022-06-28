@@ -40,6 +40,31 @@
   "file": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/RRTStarServer.cpp"
 },
 {
+  "directory": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"rrt_star\\\" -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/include/ompl-1.4 -I/usr/include/eigen3  -Wall -Wextra -g -O3   -std=gnu++14 -o CMakeFiles/rrt_star_server.dir/src/RRTPlanning.cpp.o -c /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/RRTPlanning.cpp",
+  "file": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/RRTPlanning.cpp"
+},
+{
+  "directory": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"rrt_star\\\" -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/include/ompl-1.4 -I/usr/include/eigen3  -Wall -Wextra -g -O3   -std=gnu++14 -o CMakeFiles/rrt_star_server.dir/src/ValidityChecker.cpp.o -c /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/ValidityChecker.cpp",
+  "file": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/ValidityChecker.cpp"
+},
+{
+  "directory": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"rrt_star\\\" -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/include/ompl-1.4 -I/usr/include/eigen3  -Wall -Wextra -g -O3   -std=gnu++14 -o CMakeFiles/rrt_star_server.dir/src/MotionValidator.cpp.o -c /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/MotionValidator.cpp",
+  "file": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/MotionValidator.cpp"
+},
+{
+  "directory": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"rrt_star\\\" -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/include/ompl-1.4 -I/usr/include/eigen3  -Wall -Wextra -g -O3   -std=gnu++14 -o CMakeFiles/rrt_star_server.dir/src/CubicSpliner.cpp.o -c /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/CubicSpliner.cpp",
+  "file": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/CubicSpliner.cpp"
+},
+{
+  "directory": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"rrt_star\\\" -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/devel/include -I/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/include/ompl-1.4 -I/usr/include/eigen3  -Wall -Wextra -g -O3   -std=gnu++14 -o CMakeFiles/rrt_star_server.dir/src/CubicSpline2D.cpp.o -c /home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/CubicSpline2D.cpp",
+  "file": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/src/CubicSpline2D.cpp"
+},
+{
   "directory": "/home/octominus/Projects/Robotic/ws_rrt_star/src/rrt_star/build/gtest/googlemock",
   "command": "/usr/bin/c++  -DGTEST_CREATE_SHARED_LIBRARY=1 -Dgmock_main_EXPORTS -I/usr/src/googletest/googlemock/include -I/usr/src/googletest/googlemock -I/usr/src/googletest/googletest/include -I/usr/src/googletest/googletest  -Wall -Wextra -g -O3 -fPIC   -Wall -Wextra -Wall -Wshadow -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.o -c /usr/src/googletest/googletest/src/gtest-all.cc",
   "file": "/usr/src/googletest/googletest/src/gtest-all.cc"

@@ -19,7 +19,7 @@ namespace ob = ompl::base;
 // considered "in collision".
 class ValidityChecker : public ob::StateValidityChecker {
 public:
-    explicit ValidityChecker(const ob::SpaceInformationPtr& si, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    explicit ValidityChecker(const ob::SpaceInformationPtr& si, const nav_msgs::OccupancyGrid_<std::allocator<void>>::ConstPtr &map_data);
 
     bool isWhite(double x, double y, int8_t threshold) const;
     // Returns whether the given state's position overlaps the

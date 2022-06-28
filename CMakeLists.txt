@@ -72,8 +72,23 @@ target_link_libraries(
         ${LAPACK_LIBRARIES}
 )
 
-add_executable(rrt_star_server src/RRTStarServer.cpp)
-target_link_libraries(rrt_star_server ${catkin_LIBRARIES})
+set(
+        server_sources
+        src/RRTStarServer.cpp
+        src/RRTPlanning.cpp
+        src/ValidityChecker.cpp
+        src/MotionValidator.cpp
+        src/CubicSpliner.cpp
+        src/CubicSpline2D.cpp
+)
+
+add_executable(rrt_star_server ${server_sources})
+target_link_libraries(
+        rrt_star_server 
+        ${catkin_LIBRARIES}
+        ${OMPL_LIBRARIES}
+        ${LAPACK_LIBRARIES}
+)
 
 add_executable(rrt_star_client src/RRTStarClient.cpp)
 target_link_libraries(rrt_star_client ${catkin_LIBRARIES})

@@ -32,6 +32,8 @@
 #include <vector>
 #include <queue>
 
+#include <boost/shared_ptr.hpp>
+
 #include <xtensor/xio.hpp>
 
 // My Files
@@ -50,13 +52,13 @@ public:
     ob::OptimizationObjectivePtr getBalancedObjective1(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getBalancedObjective2(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getPathLengthObjWithCostToGo(const ob::SpaceInformationPtr& si);
-    void Callback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
-    void Planner(int number, const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    void FindPath(const nav_msgs::OccupancyGrid::ConstPtr &map_data, std::vector<float> start, std::vector<float> goal);
+    void Planner(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    void MapCallback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    nav_msgs::Path GetExactPath();
+    nav_msgs::Path GetCurvedPath();
     std::vector<std::vector<float>> CalculateSpline(std::vector<float> x, std::vector<float> y, float dt);
-    ros::Publisher _pub_name;
-    ros::Subscriber _sub_name;
-    ros::Publisher _cubic_path;
     // void PathMarker(oc::PathControl path);
     // void PlannerMarker(ob::PlannerData &planner_data);
     
@@ -68,7 +70,7 @@ private:
     ob::OptimizationObjectivePtr getPathLengthObjective(const ob::SpaceInformationPtr &si) {
         return ob::OptimizationObjectivePtr(new ob::PathLengthOptimizationObjective(si));
     }
-
+    std::shared_ptr<oc::PathControl> _solved_path;
     std::vector<double> _start_point = {100.0, 100.0};
     std::vector<double> _goal_point = {900.0, 900.0};
     nav_msgs::OccupancyGrid::ConstPtr _map;
@@ -76,6 +78,8 @@ private:
     double _height = 0.0;
     double _resolation = 0.0;
     float _T_s = 0.1;
+    std::vector<float> _x_points; 
+    std::vector<float> _y_points;
 };
 
 class ClearanceObjective : public ob::StateCostIntegralObjective

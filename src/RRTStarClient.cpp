@@ -3,6 +3,9 @@
 
 #include <cstdlib>
 
+#include <nav_msgs/OccupancyGrid.h>
+#include <nav_msgs/Path.h>
+
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "rrt_star_client");
@@ -11,9 +14,9 @@ int main(int argc, char **argv)
     ROS_INFO("usage: rrt_star_client X1 Y1 X2 Y2");
     return 1;
   }
-
+  nav_msgs::Path exact_path;
   ros::NodeHandle n;
-  ros::ServiceClient client = n.serviceClient<rrt_star::rrt_star>("rrt_star");
+  ros::ServiceClient client = n.serviceClient<rrt_star::rrt_star>("rrt_star_server/rrt_star");
   rrt_star::rrt_star srv;
   srv.request.X1 = atoll(argv[1]);
   srv.request.Y1 = atoll(argv[2]);
