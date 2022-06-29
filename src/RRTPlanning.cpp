@@ -5,80 +5,90 @@
 #include "RRTPlanning.h"
 
 RRTPlanning::RRTPlanning() {
-    std::cout << "\tROS Node status: \033[1;37mOK!\033[0m\n" << std::endl;
+    std::cout << "\tRRT Star Function: \033[1;37mStarted!\033[0m" << std::endl;
 }
 
-void RRTPlanning::FindPath(const nav_msgs::OccupancyGrid::ConstPtr &map_data, std::vector<float> start, std::vector<float> goal) {
-    std::cout << "RRT Star Function Started!" << std::endl;
-    _map = map_data;
-    RRTPlanning::DefineMap(_map);
+uint8_t RRTPlanning::FindPath(const nav_msgs::OccupancyGrid::ConstPtr &map_data, std::vector<float> start, std::vector<float> goal) {
+    RRTPlanning::DefineMap(map_data);
     _start_point.at(0) = start[0]; // x1
     _start_point.at(1) = start[1]; // y1
-    std::cout << "Start: (" << _start_point.at(0) << "," << _start_point.at(1) << ")" << std::endl;
     _goal_point.at(0) = goal[0]; // x2
     _goal_point.at(1) = goal[1]; // y2
-    RRTPlanning::Planner(_map);
+    uint8_t isSolved = RRTPlanning::Planner(map_data);
+    return isSolved;
 }
 
-void RRTPlanning::MapCallback(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
-    std::cout << "Map Loaded!" << std::endl;
-    _map = map_data;
-    RRTPlanning::DefineMap(_map);
-}
-
-void RRTPlanning::Planner(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
+uint8_t RRTPlanning::Planner(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
+    time_data time_start = std::chrono::high_resolution_clock::now();
+    
+    ompl::msg::noOutputHandler();
     // Construct the robot state space in which we're planning. We're planning in [X pixels]x[Y pixels], a subset of R^2.
     std::shared_ptr<ob::RealVectorStateSpace> real_vector_ss = std::make_shared<ob::RealVectorStateSpace>(2);
-    // new ob::RealVectorStateSpace(2)
     ob::StateSpacePtr space(real_vector_ss);
-    // Set the bounds of space to be in [0,1].
-    space->as<ob::RealVectorStateSpace>()->setBounds(_resolation / 2 - 0.01, _width - _resolation / 2 + 0.01);
+
+    // Set the bounds of space to be in [0, 100].
+    space->as<ob::RealVectorStateSpace>()->setBounds(0, _width);
+
     // Construct a space information instance for this state space
     std::shared_ptr<ob::SpaceInformation> space_info = std::make_shared<ob::SpaceInformation>(space);
-    // new ob::SpaceInformation(space)
     ob::SpaceInformationPtr si(space_info);
+
     // Set the object used to check which states in the space are valid
     std::shared_ptr<ValidityChecker> validity_checker = std::make_shared<ValidityChecker>(si, map_data);
-    // new ValidityChecker(si, map_data)
     si->setStateValidityChecker(ob::StateValidityCheckerPtr(validity_checker)); 
-    // si->setStateValidityCheckingResolution(0.01); // 3%
     si->setup();
-    // Set our robot's starting state to be the bottom-left corner of
-    // the environment, or (0,0).
+
     ob::ScopedState<> start(space); // --> BAŞLANGIÇ NOKTASI
     start->as<ob::RealVectorStateSpace::StateType>()->values[0] = _start_point.at(0); 
     start->as<ob::RealVectorStateSpace::StateType>()->values[1] = _start_point.at(1);
-    // Set our robot's goal state to be the top-right corner of the
-    // environment, or (1,1).
+
     ob::ScopedState<> goal(space); // --> BİTİŞ NOKTASI
     goal->as<ob::RealVectorStateSpace::StateType>()->values[0] = _goal_point.at(0);
     goal->as<ob::RealVectorStateSpace::StateType>()->values[1] = _goal_point.at(1); 
+
     // Create a problem instance
     std::shared_ptr<ob::ProblemDefinition> problem_def = std::make_shared<ob::ProblemDefinition>(si);
-    // new ob::ProblemDefinition(si)
     ob::ProblemDefinitionPtr pdef(problem_def); 
+    
     // Set the start and goal states
     pdef->setStartAndGoalStates(start, goal);
-    // pdef->setOptimizationObjective(getPathLengthObjective(si));
     pdef->setOptimizationObjective(getBalancedObjective1(si));
+    
     // Construct our optimizing planner using the RRTstar algorithm.
     std::shared_ptr<og::RRTstar> rrtstar = std::make_shared<og::RRTstar>(si);
-    // new og::RRTstar(si)
     ob::PlannerPtr optimizingPlanner(rrtstar);
+
     // Set the problem instance for our planner to solve
     optimizingPlanner->setProblemDefinition(pdef);
     optimizingPlanner->setup();
-    // attempt to solve the planning problem within one second of
-    // planning time
+
+    // Attempt to solve the planning problem within 0.1 second of planning time
     ob::PlannerStatus solved = optimizingPlanner->solve(0.1);
+    time_data time_end = std::chrono::high_resolution_clock::now();
 
-    std::cout << "Status: " << solved << std::endl;
+    // Solving status
+    std::string exact = "Exact solution";
+    std::string approximate = "Approximate solution";
+    std::string solved_msg = solved.asString();
+    uint8_t isSolved;
 
-    ob::PlannerData planner_data(si);
-    optimizingPlanner->getPlannerData(planner_data);
+    if (solved_msg == exact || solved_msg == approximate) {
+        isSolved = 1;
+        ob::PlannerData planner_data(si);
+        optimizingPlanner->getPlannerData(planner_data);
+        std::shared_ptr<oc::PathControl> solved_path = std::static_pointer_cast<oc::PathControl>(pdef->getSolutionPath());
+        _solved_path = solved_path;
+        time_duration time_diff = time_end.time_since_epoch() - time_start.time_since_epoch();
+        _time = time_diff.count();
+    } else {
+        isSolved = 0;
+    }
 
-    std::shared_ptr<oc::PathControl> solved_path = std::static_pointer_cast<oc::PathControl>(pdef->getSolutionPath());
-    _solved_path = solved_path;
+    return isSolved;
+}
+
+float RRTPlanning::getTime() {
+    return _time;
 }
 
 nav_msgs::Path RRTPlanning::GetExactPath() {
@@ -141,7 +151,6 @@ nav_msgs::Path RRTPlanning::GetCurvedPath() {
 
 void RRTPlanning::DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data) {
     _resolation = map_data->info.resolution;
-    std::cout << "Res: " << _resolation << std::endl; 
     _height = map_data->info.height * _resolation;  // unit (m)
     _width = map_data->info.width * _resolation;    // unit (m)
 

@@ -31,6 +31,8 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <string>
+#include <chrono>
 
 // Xtensor Files
 #include <xtensor/xio.hpp>
@@ -43,6 +45,9 @@ namespace ob = ompl::base;
 namespace oc = ompl::control;
 namespace og = ompl::geometric;
 
+typedef std::chrono::high_resolution_clock::time_point time_data;
+typedef std::chrono::duration<float, std::milli> time_duration;
+
 class RRTPlanning {
 public:
     explicit RRTPlanning();
@@ -50,12 +55,12 @@ public:
     ob::OptimizationObjectivePtr getBalancedObjective1(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getBalancedObjective2(const ob::SpaceInformationPtr& si);
     ob::OptimizationObjectivePtr getPathLengthObjWithCostToGo(const ob::SpaceInformationPtr& si);
-    void FindPath(const nav_msgs::OccupancyGrid::ConstPtr &map_data, std::vector<float> start, std::vector<float> goal);
-    void Planner(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
-    void MapCallback(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
+    uint8_t FindPath(const nav_msgs::OccupancyGrid::ConstPtr &map_data, std::vector<float> start, std::vector<float> goal);
+    uint8_t Planner(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     void DefineMap(const nav_msgs::OccupancyGrid::ConstPtr &map_data);
     nav_msgs::Path GetExactPath();
     nav_msgs::Path GetCurvedPath();
+    float getTime();
     std::vector<std::vector<float>> CalculateSpline(std::vector<float> x, std::vector<float> y, float dt);
     // void PathMarker(oc::PathControl path);
     // void PlannerMarker(ob::PlannerData &planner_data);
@@ -71,10 +76,10 @@ private:
     std::shared_ptr<oc::PathControl> _solved_path;
     std::vector<double> _start_point = {100.0, 100.0};
     std::vector<double> _goal_point = {900.0, 900.0};
-    nav_msgs::OccupancyGrid::ConstPtr _map;
     double _width = 0.0;
     double _height = 0.0;
     double _resolation = 0.0;
+    float _time = 0.0;
     float _T_s = 0.1;
     std::vector<float> _x_points; 
     std::vector<float> _y_points;
