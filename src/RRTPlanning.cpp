@@ -61,34 +61,41 @@ uint8_t RRTPlanning::Planner(const nav_msgs::OccupancyGrid::ConstPtr &map_data) 
     // Set the problem instance for our planner to solve
     optimizingPlanner->setProblemDefinition(pdef);
     optimizingPlanner->setup();
+    
+    uint8_t isSolved = 0;
+    std::string exact = "Exact solution";
+    std::string solved_msg = "";
 
-    // Attempt to solve the planning problem within 0.1 second of planning time
-    ob::PlannerStatus solved = optimizingPlanner->solve(0.1);
+    for (int i = 0; i < 20; i++) {
+        if (solved_msg != exact) {
+            // Attempt to solve the planning problem within 0.1 second of planning time
+            ob::PlannerStatus solved = optimizingPlanner->solve(_desired_time);
+            // Solving status
+            solved_msg = solved.asString();
+            isSolved = 0;
+        } else {
+            
+            ob::PlannerData planner_data(si);
+            optimizingPlanner->getPlannerData(planner_data);
+            std::shared_ptr<oc::PathControl> solved_path = std::static_pointer_cast<oc::PathControl>(pdef->getSolutionPath());
+            _solved_path = solved_path;
+            isSolved = 1;
+        }
+    }
     time_data time_end = std::chrono::high_resolution_clock::now();
 
-    // Solving status
-    std::string exact = "Exact solution";
-    std::string approximate = "Approximate solution";
-    std::string solved_msg = solved.asString();
-    uint8_t isSolved;
-
-    if (solved_msg == exact || solved_msg == approximate) {
-        isSolved = 1;
-        ob::PlannerData planner_data(si);
-        optimizingPlanner->getPlannerData(planner_data);
-        std::shared_ptr<oc::PathControl> solved_path = std::static_pointer_cast<oc::PathControl>(pdef->getSolutionPath());
-        _solved_path = solved_path;
-        time_duration time_diff = time_end.time_since_epoch() - time_start.time_since_epoch();
-        _time = time_diff.count();
-    } else {
-        isSolved = 0;
-    }
+    time_duration time_diff = time_end.time_since_epoch() - time_start.time_since_epoch();
+    _time = time_diff.count();
 
     return isSolved;
 }
 
 float RRTPlanning::getTime() {
     return _time;
+}
+
+void RRTPlanning::setTime(float time) {
+    _desired_time = time;
 }
 
 nav_msgs::Path RRTPlanning::GetExactPath() {
@@ -122,12 +129,25 @@ nav_msgs::Path RRTPlanning::GetExactPath() {
     _y_points = y_points;
     return path_points;
 } 
+
 nav_msgs::Path RRTPlanning::GetCurvedPath() {
     std::vector<std::vector<float>> result;
     int path_index;
     nav_msgs::Path cubic_path_points;
+    std::vector<float> x, y;
+    x.push_back(_x_points[0]);
+    y.push_back(_y_points[0]);
 
-    result = CalculateSpline(_x_points, _y_points, _T_s);
+    for (uint i = 0; i < _x_points.size()-1; i++) {
+        float x_av = (_x_points[i] + _x_points[i+1]) / 2;
+        float y_av = (_y_points[i] + _y_points[i+1]) / 2;
+        x.push_back(x_av);
+        x.push_back(_x_points[i+1]);
+        y.push_back(y_av);
+        y.push_back(_y_points[i+1]);
+    }
+
+    result = CalculateSpline(x, y, _T_s);
 
     cubic_path_points.header.frame_id = "map";
     cubic_path_points.header.seq = 0;

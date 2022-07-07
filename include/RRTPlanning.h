@@ -61,6 +61,7 @@ public:
     nav_msgs::Path GetExactPath();
     nav_msgs::Path GetCurvedPath();
     float getTime();
+    void setTime(float time);
     std::vector<std::vector<float>> CalculateSpline(std::vector<float> x, std::vector<float> y, float dt);
     // void PathMarker(oc::PathControl path);
     // void PlannerMarker(ob::PlannerData &planner_data);
@@ -80,7 +81,8 @@ private:
     double _height = 0.0;
     double _resolation = 0.0;
     float _time = 0.0;
-    float _T_s = 0.1;
+    float _T_s = 0.01;
+    float _desired_time = 0.1; // default 0.1ms
     std::vector<float> _x_points; 
     std::vector<float> _y_points;
 };
